@@ -1,3 +1,5 @@
+/*Westin Montano & Angela Su worked together on the following code*/
+
 %{
     int num_lines = 1, num_columns = 1; 
 %}
@@ -9,10 +11,7 @@ E_ID_1  [0-9_][a-zA-Z0-9_]*
 E_ID_2  [a-zA-Z][a-zA-Z0-9_]*[_]
 
 %%
-<<<<<<< HEAD
-=======
 
->>>>>>> 72361a8f4a7ba1ad86699e3f4f8f15b99a699414
 {DIGIT}+        printf("NUMBER %s\n", yytext);
 function        printf("FUNCTION\n"); num_columns += yyleng;
 beginparams     printf("BEGINPARAMS\n"); num_columns += yyleng;
@@ -70,6 +69,7 @@ return          printf("RETURN\n"); num_columns += yyleng;
 [ ]             num_columns++;
 \t              num_columns+=4;
 \n           {num_lines++; num_columns = 1;}
+"##"[^\n]*"\n"  num_lines++; num_columns = 1;
 <<EOF>>         exit(0);
 {E_ID_1}        {printf("Error at line %d, column %d: identifier \"%s\" must begin with a letter\n",
                  num_lines, num_columns, yytext); exit(-1);}
