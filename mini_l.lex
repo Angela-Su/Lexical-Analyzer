@@ -9,6 +9,10 @@ E_ID_1  [0-9_][a-zA-Z0-9_]*
 E_ID_2  [a-zA-Z][a-zA-Z0-9_]*[_]
 
 %%
+<<<<<<< HEAD
+=======
+
+>>>>>>> 72361a8f4a7ba1ad86699e3f4f8f15b99a699414
 {DIGIT}+        printf("NUMBER %s\n", yytext);
 function        printf("FUNCTION\n"); num_columns += yyleng;
 beginparams     printf("BEGINPARAMS\n"); num_columns += yyleng;
@@ -78,6 +82,7 @@ return          printf("RETURN\n"); num_columns += yyleng;
 %%
 int main(int argc, char **argv){
     ++argv, --argc;
+
 
     if(argc > 0){
         yyin = fopen(argv[0], "r");
