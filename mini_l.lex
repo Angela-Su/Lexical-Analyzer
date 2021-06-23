@@ -5,7 +5,7 @@
 DIGIT   [0-9]
 ID      [a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]
 CHAR    [a-zA-Z]
-E_ID_1  [a-zA-Z][a-zA-Z0-9_]*
+E_ID_1  [0-9_][a-zA-Z0-9_]*
 E_ID_2  [a-zA-Z][a-zA-Z0-9_]*[_]
 
 %%
@@ -19,6 +19,7 @@ beginbody       printf(BEGINBODY\n"); num_columns += yyleng;
 endbody         printf(ENDBODY\n"); num_columns += yyleng;
 integer         printf(INTEGER\n"); num_columns += yyleng;
 array           printf(ARRAY\n"); num_columns += yyleng;
+enum            printf(ENUM\n"); num_columns += yyleng;
 of              printf(OF\n"); num_columns += yyleng;
 if              printf(IF\n"); num_columns += yyleng;
 then            printf(THEN\n"); num_columns += yyleng;
