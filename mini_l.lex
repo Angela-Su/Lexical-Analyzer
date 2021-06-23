@@ -9,6 +9,7 @@ E_ID_1  [0-9_][a-zA-Z0-9_]*
 E_ID_2  [a-zA-Z][a-zA-Z0-9_]*[_]
 
 %%
+
 {DIGIT}+        printf("NUMBER %s\n", yytext);
 function        printf("FUNCTION\n"); num_columns += yyleng;
 beginparams     printf("BEGINPARAMS\n"); num_columns += yyleng;
@@ -78,6 +79,18 @@ return          printf("RETURN\n"); num_columns += yyleng;
 %%
 int main(int argc, char **argv){
     ++argv, --argc;
+
+
+{E_ID_1}        {printf("Error at line %d, column %d: identifier \"%s\" must begin with a letter\n",
+                 num_lines, num_columns, yytext); exit(-1);}
+{E_ID_2}        {printf("Error at line %d, column %d: identifier \"%s\" cannot end with an underscore\n",
+                 num_lines, num_columns, yytext); exit(-1);}
+.               printf("Error at line $d, column %d: unrecognized symbol \"%s\"\n", num_lines, num_columns, yytext); exit(-1);
+
+%%
+int main(int argc, char **argv){
+    ++argv, --argc;
+
 
     if(argc > 0){
         yyin = fopen(argv[0], "r");
