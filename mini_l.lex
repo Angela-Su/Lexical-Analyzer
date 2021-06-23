@@ -39,26 +39,28 @@ true            printf(TRUE\n"); num_columns += yyleng;
 false           printf(FALSE\n"); num_columns += yyleng;
 return          printf(RETURN\n"); num_columns += yyleng;
 /*__________________Arithmetic Operators_____________________*/
-"-"            {printf("SUB\n"); currPos += yyleng;} 
-"+"            {printf("ADD\n"); currPos += yyleng;}
-"*"            {printf("MULT\n"); currPos += yyleng;}
-"/"            {printf("DIV\n"); currPos += yyleng;}
-"%"            {printf("MOD\n"); currPos += yyleng;}
+"-"            {printf("SUB\n"); num_columns += yyleng;} 
+"+"            {printf("ADD\n"); num_columns += yyleng;}
+"*"            {printf("MULT\n"); num_columns += yyleng;}
+"/"            {printf("DIV\n"); num_columns += yyleng;}
+"%"            {printf("MOD\n"); num_columns += yyleng;}
 /*__________________Comparison Operators_____________________*/
-"="            {printf("EQ\n"); currPos += yyleng;}
-"<>"           {printf("NEQ\n"); currPos += yyleng;}
-"<"            {printf("LT\n"); currPos += yyleng;}
-">"            {printf("GT\n"); currPos += yyleng;}
-"<="            {printf("LTE\n"); currPos += yyleng;}
-">="            {printf("GTE\n"); currPos += yyleng;}
+"="            {printf("EQ\n"); num_columns += yyleng;}
+"<>"           {printf("NEQ\n"); num_columns += yyleng;}
+"<"            {printf("LT\n"); num_columns += yyleng;}
+">"            {printf("GT\n"); num_columns += yyleng;}
+"<="            {printf("LTE\n"); num_columns += yyleng;}
+">="            {printf("GTE\n"); num_columns += yyleng;}
 /*___________________Identifiers(Number is above)_________________*/
-{ID}           {printf("IDENT %s\n"); currPos+=yyleng;}
+{ID}           {printf("IDENT %s\n"); num_columns+=yyleng;}
 /*___________________Other Special Symbols___________________*/
-";"            {printf("SEMICOLON\n"); currPos += yyleng;}
-":"            {printf("COLON\n"); currPos += yyleng;}
-","            {printf("LOMMA\n"); currPos += yyleng;}
-"("            {printf("L_PAREN\n"); currPos += yyleng;}
-")"            {printf("R_PAREN\n"); currPos += yyleng;}
-"["            {printf("L_SQUARE_BRACKET\n");currPos+=yyleng;}
-"]"            {printf("R_SQUARE_BRACKET\n");currPos+=yyleng;}
-":="            {printf("ASSIGN\n");currPos+=yyleng;}
+";"            {printf("SEMICOLON\n"); num_columns += yyleng;}
+":"            {printf("COLON\n"); num_columns += yyleng;}
+","            {printf("LOMMA\n"); num_columns += yyleng;}
+"("            {printf("L_PAREN\n"); num_columns += yyleng;}
+")"            {printf("R_PAREN\n"); num_columns += yyleng;}
+"["            {printf("L_SQUARE_BRACKET\n");num_columns+=yyleng;}
+"]"            {printf("R_SQUARE_BRACKET\n");num_columns+=yyleng;}
+":="            {printf("ASSIGN\n");num_columns+=yyleng;}
+
+.       printf("Error at line $d, column %d: unrecognized symbol \"%s\"\n", num_lines, num_columns, yytext); exit(-1);
