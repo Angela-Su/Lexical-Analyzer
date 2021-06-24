@@ -1,16 +1,25 @@
+/*Westin Montano & Angela Su worked together on the following code*/
+
 %{
     int num_lines = 1, num_columns = 1; 
 %}
 
 DIGIT   [0-9]
+E_ID_2  [a-zA-Z][a-zA-Z0-9_]*[_]
 ID      [a-zA-Z][a-zA-Z0-9_]*
 CHAR    [a-zA-Z]
 E_ID_1  [0-9_][a-zA-Z0-9_]*
-E_ID_2  [a-zA-Z][a-zA-Z0-9_]*[_]
+
 
 %%
-
 {DIGIT}+        printf("NUMBER %s\n", yytext);
+
+{E_ID_2}        {printf("Error at line %d, column %d: identifier \"%s\" cannot end with an underscore\n",
+                 num_lines, num_columns, yytext); exit(-1);}
+
+ {E_ID_1}        {printf("Error at line %d, column %d: identifier \"%s\" must begin with a letter\n",
+                 num_lines, num_columns, yytext); exit(-1);}
+
 function        printf("FUNCTION\n"); num_columns += yyleng;
 beginparams     printf("BEGINPARAMS\n"); num_columns += yyleng;
 endparams       printf("ENDPARAMS\n"); num_columns += yyleng;
@@ -67,26 +76,13 @@ return          printf("RETURN\n"); num_columns += yyleng;
 [ ]             num_columns++;
 \t              num_columns+=4;
 \n           {num_lines++; num_columns = 1;}
+"##"[^\n]*"\n"  num_lines++; num_columns = 1;
 <<EOF>>         exit(0);
-{E_ID_1}        {printf("Error at line %d, column %d: identifier \"%s\" must begin with a letter\n",
-                 num_lines, num_columns, yytext); exit(-1);}
-{E_ID_2}        {printf("Error at line %d, column %d: identifier \"%s\" cannot end with an underscore\n",
-                 num_lines, num_columns, yytext); exit(-1);}
+
 .               {printf("Error at line $d, column %d: unrecognized symbol \"%s\"\n", num_lines, num_columns, yytext); exit(-1);}
 
 
             
-%%
-int main(int argc, char **argv){
-    ++argv, --argc;
-
-
-{E_ID_1}        {printf("Error at line %d, column %d: identifier \"%s\" must begin with a letter\n",
-                 num_lines, num_columns, yytext); exit(-1);}
-{E_ID_2}        {printf("Error at line %d, column %d: identifier \"%s\" cannot end with an underscore\n",
-                 num_lines, num_columns, yytext); exit(-1);}
-.               printf("Error at line $d, column %d: unrecognized symbol \"%s\"\n", num_lines, num_columns, yytext); exit(-1);
-
 %%
 int main(int argc, char **argv){
     ++argv, --argc;
